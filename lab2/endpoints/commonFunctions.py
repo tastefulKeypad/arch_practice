@@ -24,13 +24,6 @@ def RaiseExceptionAdmin():
         headers={"WWW-Authenticate": "Bearer"}
     )
 
-def RaiseExceptionUserRegistered():
-    raise HTTPException(
-        status_code=status.HTTP_400_BAD_REQUEST,
-        detail="Email already registered",
-        headers={"WWW-Authenticate": "Bearer"}
-    )
-
 def RaiseExceptionUser():
     raise HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
@@ -38,11 +31,20 @@ def RaiseExceptionUser():
         headers={"WWW-Authenticate": "Bearer"}
     )
 
-def RaiseExceptionNoUser():
+def RaiseExceptionUserRegistered():
     raise HTTPException(
         status_code=status.HTTP_400_BAD_REQUEST,
-        detail="User does not exist"
+        detail="Email already registered",
+        headers={"WWW-Authenticate": "Bearer"}
     )
+
+def RaiseExceptionNoUser():
+    raise HTTPException(
+        status_code=status.HTTP_404_NOT_FOUND,
+        detail="User does not exist",
+        headers={"WWW-Authenticate": "Bearer"}
+    )
+
 def RaiseExceptionBadCredentials():
     raise HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
