@@ -38,10 +38,38 @@ def RaiseExceptionUserRegistered():
         headers={"WWW-Authenticate": "Bearer"}
     )
 
+def RaiseExceptionInvalidDateInput():
+    raise HTTPException(
+        status_code=status.HTTP_400_BAD_REQUEST,
+        detail="Date input is invalid",
+        headers={"WWW-Authenticate": "Bearer"}
+    )
+
+def RaiseExceptionCarIsReserved():
+    raise HTTPException(
+        status_code=status.HTTP_400_BAD_REQUEST,
+        detail="Car is already reserved for this date window",
+        headers={"WWW-Authenticate": "Bearer"}
+    )
+
+def RaiseExceptionValidRentNotFound():
+    raise HTTPException(
+        status_code=status.HTTP_400_BAD_REQUEST,
+        detail="Could not find active valid rent entry",
+        headers={"WWW-Authenticate": "Bearer"}
+    )
+
 def RaiseExceptionNoUser():
     raise HTTPException(
         status_code=status.HTTP_404_NOT_FOUND,
-        detail="User does not exist",
+        detail="Could not find user",
+        headers={"WWW-Authenticate": "Bearer"}
+    )
+
+def RaiseExceptionNoCar():
+    raise HTTPException(
+        status_code=status.HTTP_404_NOT_FOUND,
+        detail="Could not find car",
         headers={"WWW-Authenticate": "Bearer"}
     )
 
