@@ -18,7 +18,7 @@ passwordHash = PasswordHash.recommended()
 oauth2Scheme = OAuth2PasswordBearer(tokenUrl="/token")
 router = APIRouter()
 
-# Endpoints
+# ====================== Endpoints ======================
 @router.post("/token")
 def login_for_token(
     formData: Annotated[OAuth2PasswordRequestForm, Depends()],

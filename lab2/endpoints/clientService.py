@@ -18,7 +18,7 @@ passwordHash = PasswordHash.recommended()
 oauth2Scheme = OAuth2PasswordBearer(tokenUrl="/token")
 router = APIRouter(prefix="/clientService", tags=["clientService"])
 
-# Endpoints
+# ====================== Endpoints ======================
 @router.post("/create_user", response_model=schemas.user.UserResponse)
 def create_user(
     user: schemas.user.UserCreate,
@@ -42,6 +42,22 @@ def create_user(
     db.refresh(newUser)
     return newUser
 
+@router.get("/get_all_users", response_model=List[schemas.user.UserResponse])
+def get_users(
+    tokenUser: Annotated[models.User, Depends(GetTokenUser)],
+    db: Session = Depends(appdb.GetDB)
+):
+    """
+    Get list of all registered users 
+
+    Must be admin to use this endpoint
+    """
+    if not tokenUser.isAdmin:
+        RaiseExceptionAdmin()
+    return db.query(models.User).all()
+
+
+
 @router.get("/get_user_by_email", response_model=schemas.user.UserResponse)
 def get_user_by_email(
     email: str,
@@ -59,6 +75,30 @@ def get_user_by_email(
     dbUser = db.query(models.User).filter(
         models.User.email == email
     ).first()
+
+    if not dbUser:
+        RaiseExceptionNoUser()
+    return dbUser
+
+@router.get("/get_user_by_name_and_surname", response_model=List[schemas.user.UserResponse])
+def get_user_by_name_and_surname(
+    name: str,
+    surName: str,
+    tokenUser: Annotated[models.User, Depends(GetTokenUser)],
+    db: Session = Depends(appdb.GetDB)
+):
+    """
+    Get all users with given name and surname
+
+    Must be admin to use this endpoint
+    """
+    if not tokenUser.isAdmin:
+        RaiseExceptionAdmin()
+
+    dbUser = db.query(models.User).filter(
+        (models.User.name == name) &
+        (models.User.surName == surName)
+    ).all()
 
     if not dbUser:
         RaiseExceptionNoUser()
