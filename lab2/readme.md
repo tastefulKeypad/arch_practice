@@ -29,14 +29,6 @@ lab2
 └── schemas    - Содержит схемы объектов для валидации pydantic.
 ```
 
-# Запуск под Docker
-```
-git clone https://github.com/tastefulKeypad/arch_practice
-cd arch_practice/lab2
-sudo docker build -t lab .
-sudo docker run -p 8000:8000 lab
-```
-
 # Запуск под Linux
 ```
 git clone https://github.com/tastefulKeypad/arch_practice
