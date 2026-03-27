@@ -23,7 +23,7 @@
 
 ## Структура проекта
 ```
-subscription
+lab2
 ├── db         - Содержит модели объектов для БД и файл инициализации БД.
 ├── endpoints  - Содержит endpoint'ы API.
 └── schemas    - Содержит схемы объектов для валидации pydantic.
@@ -46,3 +46,17 @@ source ./bin/activate
 pip install -r requirements.txt
 fastapi run main.py
 ```
+
+# Примеры использования
+
+Чтобы инициализировать бд пользователями и автомобилями используйте endpoint 'populate_db', после чего можно будет авторизироваться как администратор:
+
+email: admin@example.com
+
+pass:  admin 
+
+Или как обычный пользователь:
+
+email: user1@example.com 
+
+pass:  user
